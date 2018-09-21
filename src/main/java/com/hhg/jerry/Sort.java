@@ -8,7 +8,7 @@ public class Sort {
         for (int i = arr.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    swap(arr, j, j + 1);
+                    Helper.swap(arr, j, j + 1);
                 }
             }
         }
@@ -22,14 +22,14 @@ public class Sort {
                     min = j;
                 }
             }
-            swap(arr, i, min);
+            Helper.swap(arr, i, min);
         }
     }
 
     public static void insert(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            for (int j = i; j > 0 && lt(arr, j, j - 1); j--) {
-                swap(arr, j, j - 1);
+            for (int j = i; j > 0 && Helper.lt(arr, j, j - 1); j--) {
+                Helper.swap(arr, j, j - 1);
             }
         }
     }
@@ -41,33 +41,19 @@ public class Sort {
     public static void quickSort(int[] arr, int left, int right) {
         if (left >= right)
             return;
-        int i = partition(arr, left, right);
+        int i = Helper.partition(arr, left, right);
         quickSort(arr, left, i - 1);
         quickSort(arr, i + 1, right);
     }
 
-    public static int partition(int[] arr, int left, int right) {
-        int mid = arr[left];
-        while (left < right) {
-            while (left < right && arr[right] >= mid) {
-                right--;
-            }
-            swap(arr, left, right);
-            while (left < right && arr[left] <= mid) {
-                left++;
-            }
-            swap(arr, left, right);
+    public static void heap(int[] arr) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            Helper.adjustHeap(arr, i, arr.length);
         }
-        return left;
-    }
 
-    public static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
-    }
-
-    public static boolean lt(int[] arr, int i, int j) {
-        return arr[i] < arr[j];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            Helper.swap(arr, 0, i);
+            Helper.adjustHeap(arr, 0, i);
+        }
     }
 }
