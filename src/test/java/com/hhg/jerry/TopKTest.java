@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class TopKTest {
     private int[] arr;
-    private final int size = 50;
+    private final int size = 10;
     private final int k = 6;
     private Long start;
 
@@ -35,6 +35,13 @@ public class TopKTest {
     @Test
     public void heapTest(){
         int[] res = TopK.heap(arr,k);
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " duration:" + (System.currentTimeMillis() - start) + "ms");
+        TestHelper.printShortArr(res, "after sort");
+    }
+
+    @Test
+    public void quickTest(){
+        int[] res = TopK.quick(arr,k);
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " duration:" + (System.currentTimeMillis() - start) + "ms");
         TestHelper.printShortArr(res, "after sort");
     }
